@@ -39,6 +39,16 @@ public class Category {
     )
     private List<Product> products = new ArrayList<>();
 
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getCategories().remove(this);
+    }
+
     public int getCategoryId() {
         return categoryId;
     }

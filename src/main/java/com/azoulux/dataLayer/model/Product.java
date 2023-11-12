@@ -9,19 +9,21 @@ import java.util.List;
 @Table(name = "produit")
 public class Product {
 
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    List<Category> categories = new ArrayList<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "produit_id")
     private int productId;
-
     @Column(name = "nom")
     private String name;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "cout")
     private int cost;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {
         return comments;
@@ -31,13 +33,23 @@ public class Product {
         this.comments = comments;
     }
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER
-    )
-    @JoinColumn(name = "produit_id")
-    private List<Comment> comments = new ArrayList<>();
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setProduct(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setProduct(null);
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     public int getProductId() {
         return productId;

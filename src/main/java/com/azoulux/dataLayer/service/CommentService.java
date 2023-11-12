@@ -10,15 +10,15 @@ import java.util.Optional;
 @Service
 public class CommentService {
 
-    @Autowired
-    private CommentRepository commentRepository;
+	@Autowired
+	private CommentRepository commentRepository;
 
-    public Iterable<Comment> getComments() {
-        return commentRepository.findAll();
-    }
+	public Iterable<Comment> getComments() {
+		return commentRepository.findAll();
+	}
 
-    public Optional<Comment> getCommentById(Integer id) {
-        return commentRepository.findById(id);
-    }
+	public Optional<Comment> getCommentById(Integer id) {
+		return commentRepository.findById(id);
+	}
 
 }
