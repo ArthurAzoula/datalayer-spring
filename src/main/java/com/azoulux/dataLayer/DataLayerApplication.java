@@ -35,30 +35,34 @@ public class DataLayerApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		Optional<Product> optProduct = productService.getProductById(1);
-		Product productId1 = optProduct.get();
 
-		System.out.println(productId1.getName());
-
-		productId1.getCategories().forEach(
+		categoryService.getCategories().forEach(
 				category -> System.out.println(category.getName()));
 
-		productId1.getComments().forEach(
-				comment -> System.out.println(comment.getContent()));
+		Category newCategory = new Category();
+		newCategory.setName("Promotion");
 
-		Optional<Category> optCategory = categoryService.getCategoryById(1);
-		Category categoryId1 = optCategory.get();
+		newCategory = categoryService.addCategory(newCategory);
 
-		System.out.println(categoryId1.getName());
+		categoryService.getCategories().forEach(
+				category -> System.out.println(category.getName()));
 
-		categoryId1.getProducts().forEach(
+		productService.getProducts().forEach(
 				product -> System.out.println(product.getName()));
 
-		Optional<Comment> optComment = commentService.getCommentById(1);
-		Comment commentId1 = optComment.get();
+		Product newProduct = new Product();
+		newProduct.setName("AssuranceAuto");
+		newProduct.setDescription("Assurance Auto pour les jeunes conducteurs");
+		newProduct.setCost(1000);
 
-		System.out.println(commentId1.getContent());
-		System.out.println(commentId1.getProduct().getName());
+		newCategory.addProduct(newProduct);
 
+		newProduct = productService.addProduct(newProduct);
+
+		productService.getProducts().forEach(
+				product -> System.out.println(product.getName()));
+
+		newProduct.getCategories().forEach(
+				category -> System.out.println(category.getName()));
 	}
 }
