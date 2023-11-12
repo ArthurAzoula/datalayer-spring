@@ -24,4 +24,16 @@ public class ProductService {
     public Product addProduct(Product product) {
         return productRepository.save(product);
     }
+
+    public void deleteProductById(Integer id) {
+        productRepository.deleteById(id);
+    }
+
+    public Iterable<Product> getProductByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    public Iterable<Product> getProductByCategoryName(String name) {
+        return productRepository.findByCategoriesName(name);
+    }
 }
